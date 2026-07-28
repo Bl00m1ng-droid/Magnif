@@ -1,24 +1,33 @@
 
 import ProductCard from "./ProductCard";
-export const productType = [
-        {id:1,name:"IBR", price:6.50},
-        {id:2,name:"Q-Tiles",price:7.00},
-        {id:3,name:"Ridge Caps",price:10.00},
-        {id:4,name:"Chromadek",price:5.90},
-    ];
+import { useState, useEffect } from "react";
     
 function ProductList(){
+    {/**useState([]) -starts out as an empty array,and gets filled when the fetch completes*/}
+    const [products, setProducts] = useState([]);
+
+    {/**this function runs once after the components first render */}
+    useEffect(() => {
+        {/**fetch - returns a Promise that resolves to a raw HTTP response
+            .json() - parses the body as JSON
+            once you have real data setProducts(data) stores it in a state which triggers a re-render*/}
+        fetch('http://localhost:5000/api/products')
+        .then((res) => res.json())
+        .then((data) => setProducts(data));
+    }, []);{/**this empty array,[],is called the dependency array
+        tells react only to re-run this effect if one of these values changes
+        without the dependency array an infinite loop would occur since the effect would run after every render
+        no dependency array = runs every render, empty array = runs once */}
     
     return(
-        <div >
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                {productType.map((product) =>
+                {products.map((product) =>
                     <li key={product.id}>
                         <ProductCard id={product.id} name ={product.name} price ={product.price}/>
                         
                     </li>)}
             </ul>
-        </div>
+       
     );
 }
 
