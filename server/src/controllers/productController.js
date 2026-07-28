@@ -18,7 +18,23 @@ async function getProductById(req,res){
     }else{
          res.status(404).json({message:"Product not found"});
         }
-
 }
 
- module.exports = {getAllProducts,getProductById};
+async function createProduct(req,res){
+    const {name,price,stockQty} = req.body;
+    {/**req.body - where Express puts the JSON payload the client sent.
+         This only works because you already have app.use(express.json()) in app.js 
+         — that middleware parses incoming JSON into req.body automatically.
+          Without it, req.body would be undefined */}
+
+    const newProduct = await prisma.product.create({
+        data:{
+            name,
+            price: parseFloat(price),
+            stockQty: parseInt(stockQty),
+        },
+    });
+    res.status(201).json(newProduct);
+}
+
+ module.exports = {getAllProducts,getProductById, createProduct};
