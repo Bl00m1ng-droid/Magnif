@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+
 function AddProduct() {
+    const {token} = useAuth();
     const [name, setName] = useState('');
     const [price,setPrice] = useState('');
     const [stockQty, setStockQty] = useState('');
@@ -12,7 +15,10 @@ function AddProduct() {
               so JSON.stringify converts your object into a JSON string first (the mirror image of res.json() parsing it back out on the server)*/}
         fetch('http://localhost:5000/api/products', {
             method: 'POST',
-            headers: {'Content-Type' : 'application/json'}, 
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization' : `Bearer ${token}`},
+                 
             body: JSON.stringify({name,price,stockQty}),
         })
         .then((res) => res.json())

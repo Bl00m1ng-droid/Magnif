@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 function Login(){
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    const {login} = useAuth();
 
     function handleSubmit(e){
         e.preventDefault();
@@ -14,9 +16,10 @@ function Login(){
         })
         .then((res) => res.json())
         .then((data) => {
-           console.log("Created:", data);
+           /*console.log("Created:", data);
            setEmail('');
-           setPassword('');
+           setPassword('');*/
+           login(data.user, data.token); //stores it in a context
         });
     }
 
