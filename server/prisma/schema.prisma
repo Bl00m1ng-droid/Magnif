@@ -12,19 +12,56 @@ datasource db {
   url = env("DATABASE_URL")
 }
 
-model Product{
-  id            Int     @id @default(autoincrement())
-  name          String
-  price         Float
-  stockQty      Int
-  createdAt     DateTime  @default(now())
+model Product {
+  id          Int              @id @default(autoincrement())
+  name        String
+  category    String           // "IBR", "Q-Tiles", "Ridge Caps", "Chromadek"
+  description String?
+  createdAt   DateTime         @default(now())
+  variants    ProductVariant[]
+ 
+}
+
+model ProductVariant {
+  id          Int         @id @default(autoincrement())
+  productId   Int
+  product     Product     @relation(fields: [productId], references: [id])
+  measurement String      // "0.4mm", "0.3mm"
+  price       Float
+  stockQty    Int
+  orderItems  OrderItem[]
 }
 
 model User{
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
-  password String
-  role String @default("registered")
-  createdAt DateTime @default(now())
+  id           Int         @id @default(autoincrement())
+  name         String
+  email        String      @unique
+  password     String
+  phoneNo      String?
+  address      String?
+  role         String      @default("registered")
+  createdAt    DateTime    @default(now())
+  orders       Order[]
+}
+
+model Order {
+  id              Int         @id @default(autoincrement())
+  userId          Int
+  user            User        @relation(fields: [userId], references: [id])
+  status          String      @default("pending")
+  deliveryAddress String?
+  deliveryStatus  String      @default("processing")
+  paymentStatus   String      @default("unpaid")
+  createdAt       DateTime    @default(now())
+  items           OrderItem[]
+}
+
+model OrderItem {
+  id               Int            @id @default(autoincrement())
+  orderId          Int
+  order            Order          @relation(fields: [orderId], references: [id])
+  productVariantId Int
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  quantity         Int
+  price            Float
 }

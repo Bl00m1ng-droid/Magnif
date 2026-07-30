@@ -19,6 +19,7 @@ function Login(){
            /*console.log("Created:", data);
            setEmail('');
            setPassword('');*/
+            console.log("LOGIN RESPONSE:", data); // temporary debug line
            login(data.user, data.token); //stores it in a context
         });
     }

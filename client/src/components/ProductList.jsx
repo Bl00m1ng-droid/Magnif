@@ -23,7 +23,7 @@ function ProductList(){
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {products.map((product) =>
                     <li key={product.id}>
-                        <ProductCard id={product.id} name ={product.name} price ={product.price}/>
+                        <ProductCard id={product.id} name ={product.name} description={product.description} variants={product.variants} />
                         
                     </li>)}
             </ul>

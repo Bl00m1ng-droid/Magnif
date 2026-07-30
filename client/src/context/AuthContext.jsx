@@ -14,9 +14,14 @@ export function AuthProvider({children}){
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         const storedToken = localStorage.getItem('token');
-        if(storedUser && storedToken){
-            setUser(JSON.parse(storedUser));
-            setToken(storedToken);
+        if(storedUser && storedToken && storedUser !== "undefined"){
+            try{
+                setUser(JSON.parse(storedUser));
+                setToken(storedToken);
+            } catch (err) {
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+            }
         }
     }, []);
 

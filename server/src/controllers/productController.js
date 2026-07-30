@@ -2,7 +2,9 @@ const prisma = require('../prismaClient');
 //Database queries take time (network round trip to the DB), so they're asynchronous
 //async function marks a function that can pause and wait
 async function getAllProducts(req,res){
-    const products = await prisma.product.findMany(); //await is where it actually pauses,until the Prisma query resolves with real data
+    const products = await prisma.product.findMany({
+        include: {variants: true}, //include the variants associated with each product
+    }); //await is where it actually pauses,until the Prisma query resolves with real data
     res.json(products);
 };
 
@@ -11,6 +13,7 @@ async function getProductById(req,res){
     //const product = products.find((product)=> (product.id === parseInt(id)));
     const product = await prisma.product.findUnique({
         where: {id: parseInt(id)},
+        include: {variants: true}, //include the variants associated with the product
     });
 
     if(product){
@@ -21,7 +24,7 @@ async function getProductById(req,res){
 }
 
 async function createProduct(req,res){
-    const {name,price,stockQty} = req.body;
+    const {name,category,description,variants} = req.body;
     {/**req.body - where Express puts the JSON payload the client sent.
          This only works because you already have app.use(express.json()) in app.js 
          — that middleware parses incoming JSON into req.body automatically.
@@ -30,9 +33,17 @@ async function createProduct(req,res){
     const newProduct = await prisma.product.create({
         data:{
             name,
-            price: parseFloat(price),
-            stockQty: parseInt(stockQty),
+            category,
+            description,
+            variants: {
+                create: variants.map((v) => ({
+                    measurement: v.measurement,
+                    price: parseFloat(v.price),
+                    stockQty: parseInt(v.stockQty),
+                })), //create the associated variants in the same operation
+            },
         },
+        include: {variants: true}, //include the variants associated with the product
     });
     res.status(201).json(newProduct);
 }

@@ -3,6 +3,7 @@
     the value from useParams is always a string eg"2" */}
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
+import { useCart } from "../context/CartContext";
 
 function ProductDetails(){
     const {id} = useParams();{/**it pulls the
@@ -10,6 +11,7 @@ function ProductDetails(){
    
     const [product,setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const {addToCart} = useCart();
 
     useEffect(() => {
         fetch(`http://localhost:5000/api/products/${id}`)
@@ -25,22 +27,42 @@ function ProductDetails(){
     if(!product || product.message === "Product not found"){
         return <p>Product not found.</p>;}
 
-    return (
-        
-        <div className="flex p-8 gap-6">
-            <div className="w-64 h-64 bg-slate-800 rounded-lg text-slate-50"></div>
-            <div>
-                    <p className="text-slate-500 text-2xl font-bold">{product.name}</p>
-                    <p className="text-xl text-amber-400">Price: ${product.price}</p>
-                    <p>Durable, weather-resistant roofing </p>
-                    <button className="text-slate-100 bg-slate-700 rounded-xl px-4 py-2 hover:bg-slate-400 shadow-md w-32" >
-                Add to Cart</button>
+     return (
+    <div className="flex p-8 gap-6">
+      <div className="w-64 h-64 bg-slate-800 rounded-lg"></div>
+      <div>
+        <p className="text-slate-900 text-2xl font-bold">{product.name}</p>
+        <p className="text-slate-900">{product.description}</p>
 
+        <div className="mt-4 flex flex-col gap-3">
+          {product.variants.map((variant) => (
+            <div
+              key={variant.id}
+              className="flex items-center justify-between bg-slate-800 p-3 rounded-lg"
+            >
+              <span className="text-slate-50">
+                {variant.measurement}mm — ${variant.price.toFixed(2)}/m
+              </span>
+              <button
+                className="bg-slate-700 text-white px-4 py-2 rounded hover:bg-slate-600"
+                onClick={() =>
+                  addToCart({
+                    id: variant.id,
+                    name: `${product.name} (${variant.measurement})`,
+                    price: variant.price,
+                  })
+                }
+              >
+                Add to Cart
+              </button>
             </div>
-                
-            
+          ))}
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default ProductDetails;
+
+
