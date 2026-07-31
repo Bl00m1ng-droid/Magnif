@@ -20,13 +20,22 @@ function ProductList(){
         no dependency array = runs every render, empty array = runs once */}
     
     return(
-            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                {products.map((product) =>
-                    <li key={product.id}>
-                        <ProductCard id={product.id} name ={product.name} description={product.description} variants={product.variants} />
-                        
-                    </li>)}
-            </ul>
+   <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+  {products.map((product) => (
+    <li 
+      key={product.id} 
+      className="transform transition duration-300 hover:scale-105 hover:shadow-2xl"
+    >
+      <ProductCard 
+        id={product.id} 
+        name={product.name} 
+        description={product.description} 
+        variants={product.variants} 
+      />
+    </li>
+  ))}
+</ul>
+
        
     );
 }
