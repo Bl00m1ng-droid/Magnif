@@ -32,7 +32,7 @@ export function CartProvider({children}){
     }
 
     return(
-        <CartContext.Provider value={{cartItems,addToCart,removeFromCart}}>
+        <CartContext.Provider value={{cartItems,addToCart,removeFromCart,clearCart}}>
             {children}
         </CartContext.Provider>
     );
@@ -49,6 +49,10 @@ export function CartProvider({children}){
         prevItems.map((item) =>
         item.id === productId ? {...item,quantity:item.quantity - 1}: item));
 
+    }
+
+    function clearCart(){
+        setCartItems([]);
     }
 }
 

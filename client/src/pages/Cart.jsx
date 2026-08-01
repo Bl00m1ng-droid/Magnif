@@ -1,7 +1,13 @@
 import { useCart } from "../context/CartContext";
+import {useAuth} from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Cart() {
-  const {cartItems,removeFromCart} = useCart();
+  const {cartItems,removeFromCart,clearCart} = useCart();
+  const {token} = useAuth();
+  const [deliveryAddress,setDeliveryAddress] = useState("");
+  const navigate = useNavigate();
 
   {/**const items = [
   {id:1,name:"IBR", price:6.50,quantity:10},
@@ -14,6 +20,34 @@ function Cart() {
   if(cartItems.length === 0){
     return <h1 className="text-2xl font-bold p-4">Your shopping cart is empty</h1>;
   }
+
+  function handleCheckout(){
+    const orderItems = cartItems.map(item => ({
+      productVariantId: item.id,
+      quantity: item.quantity,
+      price: item.price
+    }));
+
+    fetch("http://localhost:5000/api/orders",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({deliveryAddress,items:orderItems}),
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Order placed:", data);
+      clearCart();
+      navigate("/orders");
+    })
+    .catch(error => {
+      console.error("Error creating order:", error);
+    });
+  }
+
+
   
 return (
     
@@ -35,6 +69,16 @@ return (
 
       </ul>
       <p className="text-xl font-bold mt-4 text-amber-400">Total: ${total.toFixed(2)}</p>
+
+      <input className="border p-2 rounded mt-4 w-full max-w-sm"
+      placeholder="Enter delivery address"
+      value={deliveryAddress}
+      onChange={(e) => setDeliveryAddress(e.target.value)}
+      /> 
+      <button onClick={handleCheckout}
+      className="bg-slate-700 text-white px-4 py-2 rounded mt-4 block hover:bg-slate-600 transition">
+        Checkout
+      </button>
 
     </div>
   

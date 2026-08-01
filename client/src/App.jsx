@@ -6,6 +6,8 @@ import Navbar from './components/Navbar';
 import AddProduct from './pages/AddProduct';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import Orders from './pages/Orders';
+import AdminProducts from './pages/AdminProducts';
 
 
 function App(){
@@ -20,7 +22,8 @@ function App(){
         <Route path="/add-product" element={<AddProduct/>} />
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
-        
+        <Route path="/orders" element={<Orders/>}/>
+        <Route path="/admin/products" element={<AdminProducts/>}/>
       </Routes>
     </BrowserRouter>
   );

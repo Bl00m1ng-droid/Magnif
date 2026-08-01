@@ -11,7 +11,9 @@ function Navbar(){
         {user ? (
             <>
             <span className="text-white">Hi, {user.name}</span>
+            <Link to="/orders" className="text-white">My Orders</Link>
             <button onClick={logout} className="text-white">Logout</button>
+            
             </>
         ):(
             <>

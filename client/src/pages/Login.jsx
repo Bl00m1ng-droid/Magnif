@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Login(){
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const {login} = useAuth();
+    const navigate = useNavigate();
 
     function handleSubmit(e){
         e.preventDefault();
@@ -41,7 +43,7 @@ function Login(){
             onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button className="bg-slate-700 text-white rounded px-4 py-2" type="submit">
+            <button className="bg-slate-700 text-white rounded px-4 py-2" type="submit" onClick={() => navigate("/")}>
                 Login</button>
             
 
