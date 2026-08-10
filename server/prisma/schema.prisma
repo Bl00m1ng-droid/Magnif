@@ -30,6 +30,7 @@ model ProductVariant {
   measurement String      // "0.4mm", "0.3mm"
   price       Float
   stockQty    Int
+  cost        Float      @default(0)    //what it cost you to produce,needed to calculate profit
   orderItems  OrderItem[]
 }
 
@@ -54,6 +55,7 @@ model Order {
   deliveryAddress String?
   deliveryStatus  String      @default("processing")
   paymentStatus   String      @default("unpaid")
+  paynowPollUrl   String?
   createdAt       DateTime    @default(now())
   items           OrderItem[]
 }

@@ -11,6 +11,7 @@ async function updateVariant(req,res){
         data:{
             measurement,
             price: price !== undefined ? parseFloat(price) : undefined,
+            cost: cost!== undefined ? parseFloat(cost) : undefined,
             stockQty: stockQty !== undefined ? parseInt(stockQty) : undefined,
         },
     });

@@ -42,6 +42,7 @@ async function createProduct(req,res){
                 create: variants.map((v) => ({
                     measurement: v.measurement,
                     price: parseFloat(v.price),
+                    cost: parseFloat(v.cost || 0),
                     stockQty: parseInt(v.stockQty),
                 })), //create the associated variants in the same operation
             },

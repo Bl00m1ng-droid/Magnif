@@ -12,7 +12,7 @@ function ProductCard({id,name,description,variants}){
 
     return (
     <Link to={`/products/${id}`}>
-    <div className="p-6 bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border border-slate-700 shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:border-orange-300">
+    <div className="p-6 bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border border-slate-700 shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:border-orange-300 ">
       
       {/* Product Name */}
       <h3 className="text-slate-50 text-2xl font-bold mb-2 tracking-wide">
@@ -27,7 +27,7 @@ function ProductCard({id,name,description,variants}){
       </h4>
       
       {/* Description */}
-      <p className="text-slate-300 italic text-sm leading-relaxed">
+      <p className="text-slate-300 italic text-sm leading-relaxed ">
         {description || "No description available."}
       </p>
     </div>

@@ -40,4 +40,32 @@ async function getMyOrders(req,res){
     res.json(orders);
 }
 
-module.exports = {createOrder,getMyOrders};
+async function getAllOrders(req,res){
+    const orders = await prisma.order.findMany({
+        include:{
+            user: true,
+            items:{include:{productVariant:{include:{product:true}}}},
+        },
+        orderBy:{createdAt:'desc'},
+        });
+        res.json(orders);
+}
+
+async function updateDeliveryStatus(req,res){
+    const {id} = req.params;
+    const {deliveryStatus} = req.body;
+
+    const validStatuses = ["processing", "shipped","out for delivery","delivered"];
+    if(!validStatuses.includes(deliveryStatus)){
+        return res.status(400).json({message: "Invalid delivery status"});
+    }
+
+    const order = await prisma.order.update({
+        where:{id:parseInt(id)},
+        data: {deliveryStatus},
+    });
+    res.json(order);
+
+}
+
+module.exports = {createOrder,getMyOrders,getAllOrders,updateDeliveryStatus};

@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Orders from './pages/Orders';
 import AdminProducts from './pages/AdminProducts';
+import AdminDashboard from './pages/AdminDashboard';
 
 
 function App(){
@@ -24,6 +25,7 @@ function App(){
         <Route path="/login" element={<Login/>}/>
         <Route path="/orders" element={<Orders/>}/>
         <Route path="/admin/products" element={<AdminProducts/>}/>
+        <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
       </Routes>
     </BrowserRouter>
   );

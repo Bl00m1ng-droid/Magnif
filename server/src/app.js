@@ -44,5 +44,11 @@ app.use('/api/reviews', reviewRoutes);
 const variantRoutes = require('./routes/variantRoutes');
 app.use('/api/variants', variantRoutes);    
 
+const statsRoutes = require('./routes/statsRoutes');
+app.use('/api/stats', statsRoutes);
+
+const paymentRoutes = require('./routes/paymentRoutes');
+app.use('/api/payments', paymentRoutes);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
