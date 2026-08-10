@@ -1,5 +1,6 @@
 const {Paynow} = require('paynow');
 const prisma = require('../prismaClient');
+const {sendReceiptEmail} = require('../services/emailService');
 
 const paynow = new Paynow(
     process.env.PAYNOW_INTEGRATION_ID,
@@ -48,7 +49,11 @@ async function initiatePayment(req,res){
 async function checkPaymentStatus(req, res) {
   const { orderId } = req.params;
 
-  const order = await prisma.order.findUnique({ where: { id: parseInt(orderId) } });
+  const order = await prisma.order.findUnique({
+     where: { id: parseInt(orderId) },
+     include:{items:{include:{productVariant:{include:{product:true}}}},user:true},
+  });
+  
   if (!order || !order.paynowPollUrl) {
     return res.status(404).json({ message: "No payment found for this order" });
   }
@@ -62,6 +67,7 @@ async function checkPaymentStatus(req, res) {
         where: { id: order.id },
         data: { paymentStatus: 'paid' },
       });
+      await sendReceiptEmail(order);
     }
 
     res.json({ paid: isPaid });
