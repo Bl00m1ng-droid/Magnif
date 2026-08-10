@@ -27,7 +27,7 @@ async function getProductById(req,res){
 }
 
 async function createProduct(req,res){
-    const {name,category,description,variants} = req.body;
+    const {name,category,description,imageUrl,variants} = req.body;
     {/**req.body - where Express puts the JSON payload the client sent.
          This only works because you already have app.use(express.json()) in app.js 
          — that middleware parses incoming JSON into req.body automatically.
@@ -38,6 +38,7 @@ async function createProduct(req,res){
             name,
             category,
             description,
+            imageUrl,
             variants: {
                 create: variants.map((v) => ({
                     measurement: v.measurement,
@@ -54,12 +55,12 @@ async function createProduct(req,res){
 
 async function updateProduct(req,res){
     const {id} =  req.params;
-    const {name,category,description} = req.body;
+    const {name,category,description,imageUrl} = req.body;
 
     //prism.update - updates a record in the database,only the fields you specify in data:{...}
     const product = await prisma.product.update({
         where:{id: parseInt(id)},
-        data: {name,category,description},
+        data: {name,category,description,imageUrl},
     });
     res.json(product); //res.json(...) - always implies heres some data, and the status code is 200 OK by default
 }

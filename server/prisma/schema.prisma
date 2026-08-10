@@ -17,6 +17,7 @@ model Product {
   name        String
   category    String           // "IBR", "Q-Tiles", "Ridge Caps", "Chromadek"
   description String?
+  imageUrl    String?
   createdAt   DateTime         @default(now())
   variants    ProductVariant[]
   reviews     Review[]

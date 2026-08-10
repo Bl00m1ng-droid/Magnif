@@ -1,12 +1,5 @@
-const corrugateStyle = {
-  backgroundImage: `repeating-linear-gradient(
-    90deg,
-    #B9C2C8 0px, #B9C2C8 3px,
-    #C9D0D5 3px, #C9D0D5 6px,
-    #A9B3B9 6px, #A9B3B9 9px
-  )`,
-};
- 
+import sideImage from './../assets/sidecolorRoof.jpg';
+
 const services = [
   {
     step: "01 — Assess",
@@ -53,51 +46,50 @@ const services = [
     ),
   },
 ];
- 
+
 export default function ServicesSection() {
   return (
     <section className="services p-6 lg:p-10 rounded-lg bg-white shadow-lg">
-      <span className="block text-[#E2932E] text-xs font-semibold tracking-[0.25em] uppercase text-center mb-2">
+      <span className="block text-[#F2601C] text-xs font-semibold tracking-[0.25em] uppercase text-center mb-2">
         Magnif / Roofing Solutions
       </span>
-      <h2 className="text-3xl font-bold mb-6 text-[#1B1F23] text-center">
+      <h2 className="text-3xl font-bold mb-6 text-[#0B1B42] text-center">
         Our Services
       </h2>
- 
+
       <div className="flex flex-col lg:flex-row items-center justify-center mb-10 gap-6">
         <div
           role="img"
           aria-label="Corrugated metal roof sheeting"
-          style={corrugateStyle}
-          className="w-full lg:w-1/2 h-56 rounded-xl border border-[#E4E0D6] shadow-md"
+          style={{ backgroundImage: `url(${sideImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+          className="w-full lg:w-1/2 h-60 rounded-xl border border-[#E3E5E0] shadow-md"
         />
-        <p className="text-[#4A5560] leading-relaxed lg:w-1/2">
+        <p className="text-[#5B6472] leading-relaxed lg:w-1/2">
           At Magnif, we offer a comprehensive range of roofing services to meet
           all your needs. From new roof installations to repairs and inspections,
           our skilled team is here to ensure your roof is in top condition.
         </p>
       </div>
- 
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {services.map(({ step, title, desc, icon }) => (
           <div
             key={title}
-            className="group p-6 bg-gradient-to-br from-slate-950 to-slate-800 rounded-xl border border-[#E4E0D6] shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[#E2932E]"
+            className="group p-6 bg-gradient-to-br from-[#0B1B42] to-[#14295C] rounded-xl border border-[#E3E5E0] shadow-md transform transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[#F2601C]"
           >
-            <div className="w-12 h-12 rounded-full bg-[#1B1F23] text-[#F3F1EC] flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-[#E2932E] group-hover:text-[#1B1F23]">
+            <div className="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-[#F2601C] group-hover:text-white">
               {icon}
             </div>
- 
-            <span className="block text-xs tracking-widest text-[#A9B3B9] uppercase mb-1">
+
+            <span className="block text-xs tracking-widest text-white/70 uppercase mb-1">
               {step}
             </span>
-            <p className="text-[#1B1F23] font-bold text-lg mb-2">{title}</p>
-            <hr className="border-[#E4E0D6] mb-3" />
-            <p className="text-[#4A5560] text-sm leading-relaxed">{desc}</p>
+            <p className="text-white font-bold text-lg mb-2">{title}</p>
+            <hr className="border-white/15 mb-3" />
+            <p className="text-white/80 text-sm leading-relaxed">{desc}</p>
           </div>
         ))}
       </div>
     </section>
   );
 }
- 
