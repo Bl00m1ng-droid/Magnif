@@ -7,7 +7,7 @@ const paynow = new Paynow(
     process.env.PAYNOW_INTEGRATION_KEY
 );
 
-paynow.resultUrl = `${process.env.BACKEND_URL || `${import.meta.env.VITE_API_URL}`}/api/payments/result`;
+paynow.resultUrl = `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/payments/result`;
 paynow.returnUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/orders`;
 
 async function initiatePayment(req,res){
