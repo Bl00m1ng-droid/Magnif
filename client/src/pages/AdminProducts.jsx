@@ -29,7 +29,7 @@ function AdminProducts() {
   }, []);
 
   function fetchProducts() {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${import.meta.env.VITE_API_URL}/api/products`)
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }
@@ -47,7 +47,7 @@ function AdminProducts() {
   }
 
   function handleUpdateProduct(id) {
-    fetch(`http://localhost:5000/api/products/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify(editForm),
@@ -61,7 +61,7 @@ function AdminProducts() {
   }
 
   function handleDeleteProduct(id) {
-    fetch(`http://localhost:5000/api/products/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     }).then((res) => {
@@ -87,7 +87,7 @@ function AdminProducts() {
   }
 
   function handleUpdateVariant(id) {
-    fetch(`http://localhost:5000/api/variants/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/variants/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify(variantForm),
@@ -101,7 +101,7 @@ function AdminProducts() {
   }
 
   function handleDeleteVariant(id) {
-    fetch(`http://localhost:5000/api/variants/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/variants/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     }).then((res) => {
@@ -121,7 +121,7 @@ function AdminProducts() {
   const formData = new FormData();
   formData.append('image', file);
 
-  fetch('http://localhost:5000/api/upload', {
+  fetch(`${import.meta.env.VITE_API_URL}/api/upload`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}` }, // no Content-Type — the browser sets it automatically
     body: formData,

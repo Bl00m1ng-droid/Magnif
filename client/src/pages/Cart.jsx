@@ -31,7 +31,7 @@ function Cart() {
       price: item.price,
     }));
 
-    fetch("http://localhost:5000/api/orders", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({ deliveryAddress, items: orderItems }),
@@ -39,7 +39,7 @@ function Cart() {
       .then((res) => res.json())
       .then((order) => {
         clearCart();
-        return fetch(`http://localhost:5000/api/payments/initiate/${order.id}`, {
+        return fetch(`${import.meta.env.VITE_API_URL}/api/payments/initiate/${order.id}`, {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
         });

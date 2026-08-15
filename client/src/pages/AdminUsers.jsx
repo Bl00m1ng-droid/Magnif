@@ -12,7 +12,7 @@ function AdminUsers() {
   }, []);
 
   function fetchUsers() {
-    fetch("http://localhost:5000/api/users", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -20,7 +20,7 @@ function AdminUsers() {
   }
 
   function handleRoleChange(userId, newRole) {
-    fetch(`http://localhost:5000/api/users/${userId}/role`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}/role`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({ role: newRole }),

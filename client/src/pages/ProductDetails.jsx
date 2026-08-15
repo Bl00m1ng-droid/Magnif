@@ -31,7 +31,7 @@ function ProductDetails() {
   }, [id]);
 
   function fetchProduct() {
-    fetch(`http://localhost:5000/api/products/${id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
@@ -41,7 +41,7 @@ function ProductDetails() {
 
   function handleReviewSubmit(e) {
     e.preventDefault();
-    fetch("http://localhost:5000/api/reviews", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/reviews`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({ productId: product.id, rating, comment }),

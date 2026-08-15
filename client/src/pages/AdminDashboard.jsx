@@ -32,7 +32,7 @@ function AdminDashboard() {
   }, []);
 
   function fetchOrders() {
-    fetch("http://localhost:5000/api/orders/all", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/orders/all`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -40,7 +40,7 @@ function AdminDashboard() {
   }
 
   function fetchStats() {
-    fetch("http://localhost:5000/api/stats", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/stats`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -48,7 +48,7 @@ function AdminDashboard() {
   }
 
   function handleStatusChange(orderId, newStatus) {
-    fetch(`http://localhost:5000/api/orders/${orderId}/delivery-status`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}/delivery-status`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ const [statementMonth, setStatementMonth] = useState(new Date().getMonth() + 1);
 const [statementYear, setStatementYear] = useState(new Date().getFullYear());
 
 function downloadStatement() {
-  fetch(`http://localhost:5000/api/stats/monthly/download?month=${statementMonth}&year=${statementYear}`, {
+  fetch(`${import.meta.env.VITE_API_URL}/api/stats/monthly/download?month=${statementMonth}&year=${statementYear}`, {
     headers: { Authorization: `Bearer ${token}` },
   })
     .then((res) => res.blob())
@@ -86,7 +86,7 @@ useEffect(() => {
 }, []);
 
 function fetchUsers() {
-  fetch("http://localhost:5000/api/users", {
+  fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
     headers: { Authorization: `Bearer ${token}` },
   })
     .then((res) => res.json())
@@ -94,7 +94,7 @@ function fetchUsers() {
 }
 
 function handleRoleChange(userId, newRole) {
-  fetch(`http://localhost:5000/api/users/${userId}/role`, {
+  fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}/role`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     body: JSON.stringify({ role: newRole }),

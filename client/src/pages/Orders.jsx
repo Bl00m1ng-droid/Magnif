@@ -28,7 +28,7 @@ function Orders() {
   const [checkingId, setCheckingId] = useState(null);
 
   function fetchOrders() {
-    fetch("http://localhost:5000/api/orders/my-orders", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/orders/my-orders`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -49,7 +49,7 @@ function Orders() {
 
   function checkPayment(orderId) {
     setCheckingId(orderId);
-    fetch(`http://localhost:5000/api/payments/status/${orderId}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/payments/status/${orderId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
