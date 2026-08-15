@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/magnif-logo.jpg";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+
 
 function Navbar() {
   const { user, logout } = useAuth();
+  const { clearCart } = useCart();
+  const navigate = useNavigate();
+
+  function handleLogout(){
+    logout();
+    clearCart();
+    navigate("/");
+  }
 
   return (
     <nav className="bg-[#0B1B42] px-6 py-3 flex items-center justify-between shadow-md">
@@ -41,7 +52,7 @@ function Navbar() {
               <span className="text-white text-sm">Hi, {user.name}</span>
             </div>
             <button
-              onClick={logout}
+              onClick={handleLogout}
               className="text-sm text-white border border-white/30 rounded-full px-4 py-1.5 hover:border-[#F2601C] hover:text-[#F2601C] transition"
             >
               Logout

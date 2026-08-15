@@ -7,8 +7,8 @@ const paynow = new Paynow(
     process.env.PAYNOW_INTEGRATION_KEY
 );
 
-paynow.resultUrl = 'http://localhost:5000/api/payments/result';
-paynow.returnUrl = 'http://localhost:5173/orders';
+paynow.resultUrl = `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/payments/result`;
+paynow.returnUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/orders`;
 
 async function initiatePayment(req,res){
     const {orderId} = req.params;

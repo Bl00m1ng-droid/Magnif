@@ -22,10 +22,14 @@
     "multer": "^2.2.0",
     "nodemailer": "^9.0.5",
     "paynow": "^2.2.2",
+    "pdfkit": "^0.19.1",
     "pg": "^8.22.0",
     "prisma": "5.22.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+  "prisma": {
+  "seed": "node prisma/seed.js"
+}
 }

@@ -9,7 +9,7 @@ import Login from './pages/Login';
 import Orders from './pages/Orders';
 import AdminProducts from './pages/AdminProducts';
 import AdminDashboard from './pages/AdminDashboard';
-
+import AdminUsers from './pages/AdminUsers';
 
 function App(){
   return(
@@ -26,6 +26,7 @@ function App(){
         <Route path="/orders" element={<Orders/>}/>
         <Route path="/admin/products" element={<AdminProducts/>}/>
         <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
+        <Route path="/admin/users" element={<AdminUsers/>}/>
       </Routes>
     </BrowserRouter>
   );

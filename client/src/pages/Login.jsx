@@ -3,29 +3,41 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import bg from '../assets/magnif-roof-from-machine.png';
+import { useToast } from "../context/ToastContext";
 
 function Login(){
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const {login} = useAuth();
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState("");
+    const {showToast} = useToast();
 
-    function handleSubmit(e){
+
+    async function handleSubmit(e){
         e.preventDefault();
+        setErrorMessage("");
 
-        fetch('http://localhost:5000/api/auth/login',{
-             method:'POST',
-             headers:{'Content-Type' : 'application/json'},
-             body: JSON.stringify({name,email,password}),
-        })
-        .then((res) => res.json())
-        .then((data) => {
-           /*console.log("Created:", data);
-           setEmail('');
-           setPassword('');*/
-            console.log("LOGIN RESPONSE:", data); // temporary debug line
-           login(data.user, data.token); //stores it in a context
-        });
+         try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        login(data.user, data.token);
+        showToast(`Welcome back, ${data.user.name}`, "success");
+        navigate("/");
+      } else {
+        setErrorMessage(data.message || "Invalid email or password.");
+        setPassword("");
+      }
+    } catch (err) {
+      setErrorMessage("Something went wrong. Please try again.");
+    }
     }
 
     return(
@@ -52,13 +64,19 @@ function Login(){
             onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button className="bg-slate-700 text-white rounded px-4 py-2" type="submit" onClick={() => navigate("/")}>
-                Login</button>
+            {errorMessage && (
+            <p className="text-[#C23B22] text-sm bg-[#C23B22]/5 border border-[#C23B22]/20 rounded-lg px-3 py-2">
+              {errorMessage}
+            </p>
+          )}
+
+            <button className="bg-[#0b1b42] hover:bg-[#14295c] text-white rounded px-4 py-2" type="submit" >
+                Sign In</button>
             
         </form>
-        <p className="mt-6 text-center text-slate-600">
+        <p className="mt-6 text-center text-[#f2601c]">
         Don't have an account?{" "}
-        <Link to="/register" className="text-blue-600 hover:underline">
+        <Link to="/register" className="text-[#f2601c] hover:underline">
           Sign Up
         </Link>
       </p>

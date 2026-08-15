@@ -2,8 +2,23 @@ const bcrypt = require('bcryptjs');
 const prisma = require('../prismaClient');
 const jwt = require('jsonwebtoken');
 
+function isPasswordStrong(password) {
+  const minLength = password.length >= 8;
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  return minLength && hasUpper && hasLower && hasNumber && hasSpecial;
+}
+
 async function register(req,res){
     const{name,email,password} = req.body;
+
+    if (!isPasswordStrong(password)) {
+    return res.status(400).json({
+      message: "Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character.",
+    });
+  }
 
     const existingUser = await prisma.user.findUnique({where: {email}});
     if(existingUser){

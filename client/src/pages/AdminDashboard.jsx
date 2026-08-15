@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 
 function getPaymentBadge(status) {
   const styles = {
@@ -58,6 +59,55 @@ function AdminDashboard() {
       .then((res) => res.json())
       .then(() => fetchOrders());
   }
+const [statementMonth, setStatementMonth] = useState(new Date().getMonth() + 1);
+const [statementYear, setStatementYear] = useState(new Date().getFullYear());
+
+function downloadStatement() {
+  fetch(`http://localhost:5000/api/stats/monthly/download?month=${statementMonth}&year=${statementYear}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then((res) => res.blob())
+    .then((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `magnif-statement-${statementMonth}-${statementYear}.pdf`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+}
+
+const [users, setUsers] = useState([]);
+
+useEffect(() => {
+  fetchOrders();
+  fetchStats();
+  fetchUsers();
+}, []);
+
+function fetchUsers() {
+  fetch("http://localhost:5000/api/users", {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then((res) => res.json())
+    .then((data) => setUsers(data));
+}
+
+function handleRoleChange(userId, newRole) {
+  fetch(`http://localhost:5000/api/users/${userId}/role`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ role: newRole }),
+  })
+    .then((res) => {
+      if (res.ok) {
+        showToast(newRole === "admin" ? "User promoted to admin" : "Admin access removed", "success");
+        fetchUsers();
+      } else {
+        return res.json().then((data) => showToast(data.message, "error"));
+      }
+    });
+}
 
   return (
     <div className="min-h-screen bg-[#F7F7F5] p-8">
@@ -67,13 +117,22 @@ function AdminDashboard() {
             <h1 className="text-2xl font-bold text-[#0B1B42]">Admin Dashboard</h1>
             <p className="text-[#5B6472] text-sm mt-1">Overview of orders, stock and business performance</p>
           </div>
-          <Link
-            to="/admin/products"
-            className="bg-white border border-[#E3E5E0] text-[#0B1B42] text-sm font-medium px-4 py-2 rounded-full shadow-sm hover:border-[#F2601C] hover:text-[#F2601C] transition"
-          >
-            Manage Products →
-          </Link>
+         <div className="flex gap-3 mb-6">
+  <Link
+    to="/admin/products"
+    className="bg-white border border-[#E3E5E0] text-[#0B1B42] text-sm font-medium px-4 py-2 rounded-full shadow-sm hover:border-[#F2601C] hover:text-[#F2601C] transition"
+  >
+    Manage Products →
+  </Link>
+  <Link
+    to="/admin/users"
+    className="bg-white border border-[#E3E5E0] text-[#0B1B42] text-sm font-medium px-4 py-2 rounded-full shadow-sm hover:border-[#F2601C] hover:text-[#F2601C] transition"
+  >
+    Manage Users →
+  </Link>
+</div>
         </div>
+        
 
         {stats && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -126,6 +185,20 @@ function AdminDashboard() {
             </ul>
           </div>
         )}
+         <div className="flex items-center justify-center gap-2 bg-white border border-[#E3E5E0] rounded-full px-4 py-2 shadow-sm mb-4">
+          <h1 className="m-4 font-bold text-slate-900 text-lg">Download Monthly Statement:</h1>
+  <select value={statementMonth} onChange={(e) => setStatementMonth(e.target.value)} className="text-sm border-none focus:outline-none">
+    {Array.from({ length: 12 }, (_, i) => (
+      <option key={i + 1} value={i + 1}>{new Date(0, i).toLocaleString('default', { month: 'long' })}</option>
+    ))}
+  </select>
+  <select value={statementYear} onChange={(e) => setStatementYear(e.target.value)} className="text-sm border-none focus:outline-none">
+    {[2025, 2026].map((y) => <option key={y} value={y}>{y}</option>)}
+  </select>
+  <button onClick={downloadStatement} className="bg-[#0B1B42] text-white text-sm px-4 py-1.5 rounded-full hover:bg-[#14295C] transition">
+    Download PDF
+  </button>
+</div>
 
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold text-[#0B1B42]">All Orders</h2>
@@ -182,6 +255,7 @@ function AdminDashboard() {
               </div>
             </div>
           ))}
+         
         </div>
       </div>
     </div>

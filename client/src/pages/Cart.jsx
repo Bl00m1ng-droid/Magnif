@@ -14,6 +14,12 @@ function Cart() {
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   function handleCheckout() {
+    if(!token){
+      showToast("You must be logged in to checkout.", "error");
+    navigate("/login");
+    return;
+    }
+
     if (!deliveryAddress.trim()) {
       showToast("Please enter a delivery address", "error");
       return;
@@ -45,6 +51,8 @@ function Cart() {
         } else {
           showToast("Could not start payment. Please try again.", "error");
         }
+      }).catch(() =>{showToast("Checkout failed. Please try again.", "error");
+
       });
   }
 
@@ -134,11 +142,17 @@ function Cart() {
           />
 
           <button
-            onClick={handleCheckout}
-            className="bg-[#0B1B42] hover:bg-[#14295C] text-white font-semibold w-full py-3 rounded-full shadow-sm transition"
-          >
-            Proceed to Checkout
-          </button>
+  onClick={handleCheckout}
+  disabled={!token}
+  className={`w-full py-3 rounded-full shadow-sm transition font-semibold ${
+    token 
+      ? "bg-[#0B1B42] hover:bg-[#14295C] text-white" 
+      : "bg-gray-400 text-gray-200 cursor-not-allowed"
+  }`}
+>
+  {token ? "Proceed to Checkout" : "Login to Checkout"}
+</button>
+
         </div>
       </div>
     </div>
