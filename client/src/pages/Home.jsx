@@ -152,6 +152,43 @@ function Home() {
             </div>
           </section>
 
+          {/**Contact us */}
+<section className="contactUs bg-[#0B1B42] text-white rounded-xl shadow-lg p-8 lg:p-12 mt-12">
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+    {/* Location Info */}
+    <div>
+      <h2 className="text-2xl font-bold mb-4 text-[#F2601C]">Where We Are Located</h2>
+      <p className="leading-relaxed">
+        851 Mpandawana Industrial Park,<br />
+        Gutu Garage Opposite Telone
+      </p>
+    </div>
+
+    {/* Contact Info */}
+    <div>
+      <h2 className="text-2xl font-bold mb-4 text-[#F2601C]">Get in Touch With Us</h2>
+      <ul className="space-y-2">
+        <li>📞 <a href="tel:+263774774865" className="hover:text-[#4E9B02]">+263 77 123 4567</a></li>
+        <li>📞 <a href="tel:+263713165372" className="hover:text-[#4E9B02]">+263 71 234 5678</a></li>
+      </ul>
+      <div className="mt-4">
+        <a
+          href="https://www.facebook.com/people/Magnif-Pvt-Ltd/61554219253016/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center space-x-2 bg-[#F2601C] hover:bg-[#D9540F] text-white px-4 py-2 rounded-full shadow-md transition"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5">
+            <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54v-2.891h2.54V9.845c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562v1.875h2.773l-.443 2.891h-2.33v6.987C18.343 21.128 22 16.991 22 12z"/>
+          </svg>
+          <span>Facebook</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
         </div>
       </div>
     </>
