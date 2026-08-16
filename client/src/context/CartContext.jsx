@@ -1,9 +1,26 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext ,useEffect} from "react";
 
 const CartContext = createContext();
 
 export function CartProvider({children}){
     const [cartItems,setCartItems] = useState([]);
+
+    //restore cart from localStorage once, on load
+    useEffect(() => {
+        const stored = localStorage.getItem("cartItems");
+        if(stored && stored !== "undefined"){
+            try {
+                setCartItems(JSON.parse(stored));
+            }catch(err){
+                localStorage.removeItem("cartItems");
+            }
+        }
+    }, []);
+
+    //keep localStorage in sync whenever cartItems changes
+    useEffect(() => {
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }, [cartItems]);
     
     {/**the spread operator [...] - {..item} copies every 
         existing field from item into a new object and then quality:item.quality + 1
