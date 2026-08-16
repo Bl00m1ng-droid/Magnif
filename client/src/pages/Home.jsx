@@ -153,12 +153,12 @@ function Home() {
           </section>
 
           {/**Contact us */}
-<section className="contactUs bg-[#0B1B42] text-white rounded-xl shadow-lg p-8 lg:p-12 mt-12">
+<section className="contactUs bg-white text-white rounded-xl shadow-lg p-8 lg:p-12 mt-12">
   <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
     {/* Location Info */}
     <div>
-      <h2 className="text-2xl font-bold mb-4 text-[#F2601C]">Where We Are Located</h2>
-      <p className="leading-relaxed">
+      <h2 className="text-2xl font-bold mb-4 text-[#0B1B42]">Where We Are Located</h2>
+      <p className="leading-relaxed text-[#5B6472]">
         851 Mpandawana Industrial Park,<br />
         Gutu Garage Opposite Telone
       </p>
@@ -166,10 +166,10 @@ function Home() {
 
     {/* Contact Info */}
     <div>
-      <h2 className="text-2xl font-bold mb-4 text-[#F2601C]">Get in Touch With Us</h2>
+      <h2 className="text-2xl font-bold mb-4 text-[#0B1B42]">Get in Touch With Us</h2>
       <ul className="space-y-2">
-        <li>📞 <a href="tel:+263774774865" className="hover:text-[#4E9B02]">+263 77 123 4567</a></li>
-        <li>📞 <a href="tel:+263713165372" className="hover:text-[#4E9B02]">+263 71 234 5678</a></li>
+        <li>📞 <a href="tel:+263774774865" className="hover:text-[#F2601C]">+263 77 123 4567</a></li>
+        <li>📞 <a href="tel:+263713165372" className="hover:text-[#F2601C]">+263 71 234 5678</a></li>
       </ul>
       <div className="mt-4">
         <a
