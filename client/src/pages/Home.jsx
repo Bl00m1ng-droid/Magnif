@@ -154,7 +154,7 @@ function Home() {
 
           {/**Contact us */}
 <section className="contactUs bg-white text-white items-center rounded-xl shadow-lg p-8 lg:p-12 mt-12">
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
     {/* Location Info */}
     <div>
       <h2 className="text-2xl font-bold mb-4 text-[#0B1B42]">Where We Are Located</h2>
