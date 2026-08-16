@@ -83,48 +83,48 @@ function Cart() {
 
         <div className="flex flex-col gap-3 mb-6">
           {cartItems.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white border border-[#E3E5E0] rounded-xl p-4 flex items-center justify-between gap-4 shadow-sm"
-            >
-              <div>
-                <p className="font-medium text-[#14171C]">{item.name}</p>
-                <p className="text-sm text-[#5B6472]">${item.price.toFixed(2)} each</p>
-              </div>
+  <div
+    key={item.id}
+    className="bg-white border border-[#E3E5E0] rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shadow-sm"
+  >
+    <div>
+      <p className="font-medium text-[#14171C]">{item.name}</p>
+      <p className="text-sm text-[#5B6472]">${item.price.toFixed(2)} each</p>
+    </div>
 
-              <div className="flex items-center gap-4">
-                <div className="flex items-center border border-[#E3E5E0] rounded-full">
-                  <button
-                    onClick={() => decreaseQuantity(item.id)}
-                    className="w-8 h-8 flex items-center justify-center text-[#5B6472] hover:text-[#F2601C] transition"
-                  >
-                    −
-                  </button>
-                  <span className="w-6 text-center text-sm font-medium text-[#14171C]">{item.quantity}</span>
-                  <button
-                    onClick={() => increaseQuantity(item.id)}
-                    className="w-8 h-8 flex items-center justify-center text-[#5B6472] hover:text-[#4E9B02] transition"
-                  >
-                    +
-                  </button>
-                </div>
+    <div className="flex items-center justify-between sm:justify-end gap-4">
+      <div className="flex items-center border border-[#E3E5E0] rounded-full">
+        <button
+          onClick={() => decreaseQuantity(item.id)}
+          className="w-8 h-8 flex items-center justify-center text-[#5B6472] hover:text-[#F2601C] transition"
+        >
+          −
+        </button>
+        <span className="w-6 text-center text-sm font-medium text-[#14171C]">{item.quantity}</span>
+        <button
+          onClick={() => increaseQuantity(item.id)}
+          className="w-8 h-8 flex items-center justify-center text-[#5B6472] hover:text-[#4E9B02] transition"
+        >
+          +
+        </button>
+      </div>
 
-                <p className="font-semibold text-[#0B1B42] w-16 text-right">
-                  ${(item.price * item.quantity).toFixed(2)}
-                </p>
+      <p className="font-semibold text-[#0B1B42] w-16 text-right">
+        ${(item.price * item.quantity).toFixed(2)}
+      </p>
 
-                <button
-                  onClick={() => {
-                    removeFromCart(item.id);
-                    showToast(`Removed ${item.name}`, "info");
-                  }}
-                  className="text-[#C23B22] text-sm hover:underline"
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          ))}
+      <button
+        onClick={() => {
+          removeFromCart(item.id);
+          showToast(`Removed ${item.name}`, "info");
+        }}
+        className="text-[#C23B22] text-sm hover:underline shrink-0"
+      >
+        Remove
+      </button>
+    </div>
+  </div>
+))}
         </div>
 
         <div className="bg-white border border-[#E3E5E0] rounded-xl p-5 shadow-sm">
