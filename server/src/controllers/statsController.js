@@ -123,6 +123,13 @@ async function downloadMonthlyStatement(req, res) {
     .opacity(0.8)
     .text(`${monthName} ${year}`, 0, 60, { align: 'right', width: doc.page.width - 50 })
     .opacity(1);
+  
+  doc
+  .fontSize(9)
+  .fillColor('#FFFFFF')
+  .opacity(0.6)
+  .text(`Generated on ${new Date().toLocaleDateString()}`, 0, 78, { align: 'right', width: doc.page.width - 50 })
+  .opacity(1);
 
   doc.moveDown();
   doc.y = 140;
