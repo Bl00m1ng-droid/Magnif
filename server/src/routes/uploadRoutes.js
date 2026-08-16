@@ -1,3 +1,7 @@
+const express = require('express');
+const router = express.Router();
+const upload = require('../middleware/upload');
+const { requireAuth, requireAdmin } = require('../middleware/authMiddleware');
 // routes/uploadRoutes.js (or directly in the route handler)
 const cloudinary = require('../config/cloudinary');
 const fs = require('fs');
@@ -19,4 +23,11 @@ router.post('/', requireAuth, requireAdmin, upload.single('image'), async (req, 
   }
 });
 
+
 module.exports = router;
+
+
+
+
+
+
