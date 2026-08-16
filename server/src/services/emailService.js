@@ -37,6 +37,7 @@ async function sendReceiptEmail(order) {
         filename: 'magnif-poster.png',
         content: posterBuffer,
         content_id: 'posterImage',
+        contentType: 'image/png',
       },
     ],
   });
